@@ -79,6 +79,27 @@ User.destroy_all
 
 ******************************
 
+<h1>Listing Users</h1>
+<table  >
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Occupation</th>
+  </tr>
+
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.id %></td>
+    <td><%= user.name %></td>
+    <td><%= user.occupation %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+
+******************************
+
 make your own action:
 
 1) just create action in controller

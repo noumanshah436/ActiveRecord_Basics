@@ -1,0 +1,131 @@
+https://guides.rubyonrails.org/v5.2/active_record_migrations.html
+
+
+Migrations:
+
+Migrations alow you to use an Ruby DSL to describe changes to your tables -
+
+Create Migration , alter table
+
+
+***************
+
+
+if you want to change the structure of db table you need to create a migration file alone ( we can change more than one table in one migration file )
+
+1) rails generate migration changes_to_tables
+
+2) write down changes:
+
+def change
+	add_column :books, year, :integer
+	rename_column :students, :name, :student_name
+	remove_timestamps :students
+end
+
+
+
+3) rake db:migrate
+
+4) see refresh sqlite table
+
+if you want more changes , you need to create another migration file
+
+
+***********************
+
+If you wish for a migration to do something that Active Record doesn't know how to reverse, you can use reversible.
+
+You can also use the old style of migration using up and down methods instead of the change method.
+The up method should describe the transformation you'd like to make to your schema,
+and the down method of your migration should revert the transformations done by the up method.
+
+***********************
+
+
+1)  add_column :products, :part_number, :string
+add column part_number of string type in products
+
+add_column :products, :price, :decimal, precision: 5, scale: 2
+
+2)  add_index :products, :part_number
+
+3)  remove_column :products, :part_number, :string
+
+remove_column :posts, :slug, :string, null: false, default: '', index: true
+
+4) create_table :products do |t|
+      t.string :name
+      t.string :part_number
+    end
+
+5) AddUserRefToProducts
+add_reference :products, :user, foreign_key: true
+
+6) change_table, used for changing existing tables.
+To removes the description and name columns, creates a part_number string column and adds an index on it. Finally it renames the upccode column.
+
+change_table :products do |t|
+  t.remove :description, :name
+  t.string :part_number
+  t.index :part_number
+  t.rename :upccode, :upc_code
+end
+
+change_table :products do |t|
+	t.string :part_number,:description
+	t.index :part_number
+end
+
+
+7) change_column :products, :part_number, :text
+
+This changes the column part_number on products table to be a :text field. Note that change_column command is irreversible.
+
+8)
+change_column_null :products, :name, false
+change_column_default :products, :approved, from: true, to: false
+
+This sets :name field on products to a NOT NULL column and the default value of the :approved field from true to false.
+
+9) drop_table :distributors
+
+10)  It is wise to perform the transformations in down method in precisely the reverse order they were made in the up method
+
+a)
+			def up
+				add_column :products, :price, :decimal, precision: 5, scale: 2
+				rename_column :products, :part_number, :part_type
+			end
+
+			def down
+				rename_column :products, :part_type, :part_number
+				remove_column :products, :price
+			end
+b)
+			def up
+				add_column :products, :ssl_enabled, :boolean, default: true
+			end
+
+			def down
+				remove_column :products, :ssl_enabled
+			end
+
+
+
+11)  you can execute your own query to alter table
+
+Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
+
+
+**********************
+
+ rails db:migrate VERSION=20220825162220
+
+
+***********************
+
+This migration uses command, which is not automatically reversible.
+To make the migration reversible you can either:
+1. Define #up and #down methods in place of the #change method.
+2. Use the #reversible method to define reversible behavior.
