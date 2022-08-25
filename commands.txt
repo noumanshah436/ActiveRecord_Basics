@@ -9,6 +9,12 @@ rails g controller User index
 rails g model User name:string occupation:string
 rails db:migrate
 
+
+rails g controller Person index
+rails g model Person  age:integer
+rails db:migrate
+
+
 ******************************
 
 
