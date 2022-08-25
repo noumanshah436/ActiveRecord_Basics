@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'student/index'
   get 'person/index'
   get 'user/index'
   get 'user/my_action'
