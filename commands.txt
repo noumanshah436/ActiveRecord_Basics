@@ -6,9 +6,8 @@ rails generate controller Product index
 
 
 rails g controller User index
-
-
-
+rails g model User name:string occupation:string
+rails db:migrate
 
 ******************************
 
