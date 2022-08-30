@@ -19,13 +19,14 @@ end
 
 class Student < ApplicationRecord
   # validates :name, presence: true, allow_blank: true
+  validates :name, presence: true 
   # validates :name, absence: true
   # validates :name, uniqueness: true
   # validates :name, numericality: true
   # validates_with GoodnessValidator
   # validates_with MyValidator
   # validates :name, presence: true, length: { minimum: 3 }
-  validates :name, presence: { message: "name must be given please" }
+  # validates :name, presence: { message: "name must be given please" }
 end
 
 

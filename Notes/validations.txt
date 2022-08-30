@@ -101,3 +101,14 @@ student.valid? # => false
 student.errors[:name] # => ["is too short (minimum is 3 characters)"]
 
 *************************
+
+student.errors.full_messages
+student.errors.full_messages
+
+<ul>
+  <% @article.errors.full_messages.each do |msg| %>
+  <li><%= msg %></li>
+  <% end %>
+</ul>
+
+

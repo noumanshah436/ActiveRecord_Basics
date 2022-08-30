@@ -2,11 +2,12 @@ class PersonController < ApplicationController
 
   # http://localhost:3000/person/index
   def index
-    person = Person.new
-    person.age = 110
-    p person
-    # p person.age_highest?  # => true
-    # p person.reset_age     # => 0
-    # p person.age_highest?  # => false
+    # person = Person.new
+    # person.name = "Uncle Bob"
+    # person.save
+
+    person = Person.find_by_name('Uncle Bob')
+    p person.changed?
+
   end
 end
